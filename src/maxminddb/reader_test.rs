@@ -1,4 +1,4 @@
-use env_logger;
+extern crate env_logger;
 
 use super::{MaxMindDBError, Reader};
 
