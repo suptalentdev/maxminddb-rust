@@ -25,9 +25,8 @@ pub enum DataRecord {
     Null,
 }
 
-use self::DataRecord::{
-    Array, Boolean, Byte, Double, Float, Int32, Map, Null, String, Uint16, Uint32, Uint64,
-};
+use self::DataRecord::{Array, Boolean, Byte, Double, Float, Int32, Map, Null, String, Uint16,
+                       Uint32, Uint64};
 
 macro_rules! expect(
     ($e:expr, $t:ident) => ({
@@ -59,7 +58,7 @@ impl Decoder {
     }
 
     fn peek(&self) -> Option<&DataRecord> {
-        self.stack.last()
+        self.stack.get(self.stack.len() - 1)
     }
 }
 
@@ -329,7 +328,10 @@ struct ArrayAccess<'a> {
 
 impl<'a> ArrayAccess<'a> {
     fn new(de: &'a mut Decoder, count: usize) -> Self {
-        ArrayAccess { de, count }
+        ArrayAccess {
+            de: de,
+            count: count,
+        }
     }
 }
 
@@ -360,7 +362,10 @@ struct MapAccessor<'a> {
 
 impl<'a> MapAccessor<'a> {
     fn new(de: &'a mut Decoder, count: usize) -> Self {
-        MapAccessor { de, count }
+        MapAccessor {
+            de: de,
+            count: count,
+        }
     }
 }
 
